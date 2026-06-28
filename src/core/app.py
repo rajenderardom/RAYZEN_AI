@@ -11,6 +11,7 @@ from src.core.settings import SettingsManager
 from src.desktop.launcher import DesktopLauncher
 from src.browser.controller import BrowserController
 from src.core.command_engine import CommandEngine
+from src.core.interpreter import NaturalLanguageInterpreter
 
 
 class RayzenApp:
@@ -23,6 +24,7 @@ class RayzenApp:
         self.desktop = DesktopLauncher()
         self.browser = BrowserController()
         self.command_engine = CommandEngine(self.desktop, self.browser, self.logger)
+        self.interpreter = NaturalLanguageInterpreter()
 
     def start(self):
         """Start the interactive console command loop."""
@@ -40,19 +42,21 @@ class RayzenApp:
             except (KeyboardInterrupt, EOFError):
                 break
 
-            normalized = command.strip().lower()
-            if not normalized:
+            if not command.strip():
                 continue
+
+            interpreted_command = self.interpreter.interpret(command)
+            normalized = interpreted_command.strip().lower()
 
             if normalized == "exit":
                 break
             elif normalized == "help":
                 self.show_help()
             elif normalized in self.command_engine.get_available_commands():
-                self.command_engine.execute(command)
+                self.command_engine.execute(interpreted_command)
             else:
                 # Triggers the CommandEngine warning and prints message to stdout
-                self.command_engine.execute(command)
+                self.command_engine.execute(interpreted_command)
                 print("Unknown command.")
 
     def show_help(self):
