@@ -5,7 +5,7 @@ Command Engine
 Version : 0.1.0
 """
 
-from typing import Dict, Callable
+from typing import Dict, Callable, List
 from src.core.logger import RayzenLogger
 from src.desktop.launcher import DesktopLauncher
 from src.browser.controller import BrowserController
@@ -42,6 +42,14 @@ class CommandEngine:
             "open chatgpt": self.browser.open_chatgpt,
         }
 
+    def get_available_commands(self) -> List[str]:
+        """Get the list of all registered commands.
+
+        Returns:
+            List[str]: A list of command strings.
+        """
+        return sorted(self._commands.keys())
+
     def execute(self, command: str) -> bool:
         """Execute a text command by finding and running its mapped handler.
 
@@ -71,3 +79,4 @@ class CommandEngine:
             # Logs a warning warning using the underlying logger
             self.logger.logger.warning(f"Unknown command: '{command}'")
             return False
+

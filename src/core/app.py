@@ -9,6 +9,8 @@ from src.core.config import AppConfig
 from src.core.logger import RayzenLogger
 from src.core.settings import SettingsManager
 from src.desktop.launcher import DesktopLauncher
+from src.browser.controller import BrowserController
+from src.core.command_engine import CommandEngine
 
 
 class RayzenApp:
@@ -19,22 +21,46 @@ class RayzenApp:
         self.logger = RayzenLogger()
         self.settings = SettingsManager()
         self.desktop = DesktopLauncher()
+        self.browser = BrowserController()
+        self.command_engine = CommandEngine(self.desktop, self.browser, self.logger)
 
     def start(self):
-        print("=" * 50)
-        print(self.config.app_name)
-        print(f"Version : {self.config.version}")
-        print(f"Author  : {self.config.author}")
-        print(f"Theme   : {self.settings.get('theme')}")
-        print(f"Language: {self.settings.get('language')}")
-        print(f"Debug   : {self.settings.get('debug')}")
-        print("=" * 50)
+        """Start the interactive console command loop."""
+        print("=" * 40)
+        print("RAYZEN AI v0.2")
+        print("Type 'help' to view commands.")
+        print("Type 'exit' to quit.")
+        print("=" * 40)
 
         self.logger.info("Core Engine Started Successfully.")
 
-        print("Opening Notepad...")
+        while True:
+            try:
+                command = input("> ")
+            except (KeyboardInterrupt, EOFError):
+                break
 
-        if self.desktop.open_notepad():
-            self.logger.info("Notepad Opened Successfully.")
+            normalized = command.strip().lower()
+            if not normalized:
+                continue
 
-        print("=" * 50)
+            if normalized == "exit":
+                break
+            elif normalized == "help":
+                self.show_help()
+            elif normalized in self.command_engine.get_available_commands():
+                self.command_engine.execute(command)
+            else:
+                # Triggers the CommandEngine warning and prints message to stdout
+                self.command_engine.execute(command)
+                print("Unknown command.")
+
+    def show_help(self):
+        """Display help information and supported commands."""
+        print("Supported commands:")
+        for cmd in self.command_engine.get_available_commands():
+            print(f"- {cmd}")
+        print("- help")
+        print("- exit")
+
+

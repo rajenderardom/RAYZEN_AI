@@ -84,6 +84,21 @@ class TestCommandEngine(unittest.TestCase):
             "Command execution failed: Command must be a string."
         )
 
+    def test_get_available_commands(self):
+        commands = self.engine.get_available_commands()
+        expected = [
+            "open calculator",
+            "open chatgpt",
+            "open explorer",
+            "open github",
+            "open google",
+            "open notepad",
+            "open paint",
+        ]
+        self.assertEqual(commands, expected)
+
+
+
 
 if __name__ == "__main__":
     unittest.main()
