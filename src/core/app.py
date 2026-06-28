@@ -8,6 +8,7 @@ Version : 0.1.0 Genesis
 from src.core.config import AppConfig
 from src.core.logger import RayzenLogger
 from src.core.settings import SettingsManager
+from src.desktop.launcher import DesktopLauncher
 
 
 class RayzenApp:
@@ -17,6 +18,7 @@ class RayzenApp:
         self.config = AppConfig()
         self.logger = RayzenLogger()
         self.settings = SettingsManager()
+        self.desktop = DesktopLauncher()
 
     def start(self):
         print("=" * 50)
@@ -29,5 +31,10 @@ class RayzenApp:
         print("=" * 50)
 
         self.logger.info("Core Engine Started Successfully.")
+
+        print("Opening Notepad...")
+
+        if self.desktop.open_notepad():
+            self.logger.info("Notepad Opened Successfully.")
 
         print("=" * 50)
