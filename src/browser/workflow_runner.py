@@ -32,7 +32,8 @@ class WorkflowRunner:
         self.playwright = playwright_engine
         self.element = element_engine
         self.page_control = page_controller
-        self.logger = RayzenLogger()
+        self.logger = getattr(playwright_engine, "logger", None) or RayzenLogger()
+
 
 
     def validate(self, step: Dict[str, Any]) -> bool:

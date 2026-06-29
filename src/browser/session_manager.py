@@ -21,8 +21,9 @@ class SessionManager:
             playwright_engine (PlaywrightEngine): Playwright engine instance.
         """
         self.engine = playwright_engine
-        self.logger = RayzenLogger()
+        self.logger = getattr(playwright_engine, "logger", None) or RayzenLogger()
         self.profile_dir = "data/browser_profiles"
+
 
         self._active_profile: str = ""
         os.makedirs(self.profile_dir, exist_ok=True)

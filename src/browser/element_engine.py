@@ -19,7 +19,8 @@ class ElementEngine:
             playwright_engine (PlaywrightEngine): Playwright engine instance.
         """
         self.engine = playwright_engine
-        self.logger = RayzenLogger()
+        self.logger = getattr(playwright_engine, "logger", None) or RayzenLogger()
+
 
 
     def _get_active_page(self):

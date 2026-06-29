@@ -123,6 +123,12 @@ class WorkflowEngine:
             elif step_lower == "launch browser":
                 return self.browser.launch_browser(headless=False)
 
+            elif step_lower == "open website":
+                data = self.loader.load("workflows/browser/google_search.json")
+                if not data:
+                    return self.browser.open_url("https://www.google.com")
+                return self.runner.run(data["steps"])
+
             elif step_lower.startswith("open "):
                 target = step[5:].strip()
                 url_map = {
@@ -152,14 +158,8 @@ class WorkflowEngine:
             elif step_lower == "calculate sheet dimensions":
                 return True
 
-            # 4. Real generic browser workflow steps execution
-            elif step_lower == "open website":
-                data = self.loader.load("workflows/browser/google_search.json")
-                if not data:
-                    return self.browser.open_url("https://www.google.com")
-                return self.runner.run(data["steps"])
-
             elif step_lower == "login":
+
                 data = self.loader.load("workflows/browser/login.json")
                 if not data:
                     return True
