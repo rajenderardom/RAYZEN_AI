@@ -1,0 +1,24 @@
+{
+    "name": "Generic Upload File",
+    "version": "1.0",
+    "description": "Navigates to an upload portal and uploads a local file.",
+    "steps": [
+        {
+            "action": "open_url",
+            "url": "https://example.com/upload"
+        },
+        {
+            "action": "wait_for_selector",
+            "selector": "input[type='file']"
+        },
+        {
+            "action": "upload",
+            "selector": "input[type='file']",
+            "path": "data/sample.csv"
+        },
+        {
+            "action": "click",
+            "selector": "#submit-upload"
+        }
+    ]
+}

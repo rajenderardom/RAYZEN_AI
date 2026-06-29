@@ -1,0 +1,29 @@
+{
+    "name": "Web Report Generator",
+    "version": "1.0",
+    "description": "Fills query criteria on a web dashboard to generate and download a spreadsheet report.",
+    "steps": [
+        {
+            "action": "open_url",
+            "url": "https://example.com/reports/generator"
+        },
+        {
+            "action": "wait_for_selector",
+            "selector": "#report-type"
+        },
+        {
+            "action": "type",
+            "selector": "#query-input",
+            "text": "Annual Summary"
+        },
+        {
+            "action": "click",
+            "selector": "#generate-btn"
+        },
+        {
+            "action": "download",
+            "selector": "#export-excel",
+            "path": "data/annual_report.xlsx"
+        }
+    ]
+}

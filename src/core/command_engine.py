@@ -31,16 +31,17 @@ class CommandEngine:
         self.browser = browser_controller
         self.logger = logger
 
-        # Registry pattern instead of long if-else chains for high extensibility.
+        # Registry pattern with dynamic runtime resolution.
         self._commands: Dict[str, Callable[[], bool]] = {
-            "open notepad": self.desktop.open_notepad,
-            "open calculator": self.desktop.open_calculator,
-            "open explorer": self.desktop.open_explorer,
-            "open paint": self.desktop.open_paint,
-            "open google": self.browser.open_google,
-            "open github": self.browser.open_github,
-            "open chatgpt": self.browser.open_chatgpt,
+            "open notepad": lambda: self.desktop.open_notepad(),
+            "open calculator": lambda: self.desktop.open_calculator(),
+            "open explorer": lambda: self.desktop.open_explorer(),
+            "open paint": lambda: self.desktop.open_paint(),
+            "open google": lambda: self.browser.open_google(),
+            "open github": lambda: self.browser.open_github(),
+            "open chatgpt": lambda: self.browser.open_chatgpt(),
         }
+
 
     def get_available_commands(self) -> List[str]:
         """Get the list of all registered commands.

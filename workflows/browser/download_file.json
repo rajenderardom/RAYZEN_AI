@@ -1,0 +1,20 @@
+{
+    "name": "Generic Download File",
+    "version": "1.0",
+    "description": "Navigates to a page and clicks a button to trigger a file download.",
+    "steps": [
+        {
+            "action": "open_url",
+            "url": "https://example.com/downloads"
+        },
+        {
+            "action": "wait_for_selector",
+            "selector": "#download-link"
+        },
+        {
+            "action": "download",
+            "selector": "#download-link",
+            "path": "downloads/report.xlsx"
+        }
+    ]
+}

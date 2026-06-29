@@ -1,0 +1,24 @@
+{
+    "name": "Cloud Storage Backup",
+    "version": "1.0",
+    "description": "Uploads the compiled report file to a cloud storage backup portal.",
+    "steps": [
+        {
+            "action": "open_url",
+            "url": "https://example.com/storage/backup"
+        },
+        {
+            "action": "wait_for_selector",
+            "selector": "#upload-trigger"
+        },
+        {
+            "action": "upload",
+            "selector": "#upload-trigger",
+            "path": "data/report.xlsx"
+        },
+        {
+            "action": "wait",
+            "duration": 5000
+        }
+    ]
+}

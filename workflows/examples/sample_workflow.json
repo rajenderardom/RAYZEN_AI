@@ -1,0 +1,29 @@
+{
+    "name": "Sample Complex Workflow",
+    "version": "1.0",
+    "description": "Demonstrates multiple browser navigation tab structures, screenshotting, and scrolling actions.",
+    "steps": [
+        {
+            "action": "open_url",
+            "url": "https://example.com"
+        },
+        {
+            "action": "new_tab"
+        },
+        {
+            "action": "open_url",
+            "url": "https://example.com/docs"
+        },
+        {
+            "action": "scroll",
+            "selector": "#footer"
+        },
+        {
+            "action": "screenshot",
+            "path": "data/docs_footer.png"
+        },
+        {
+            "action": "close_tab"
+        }
+    ]
+}

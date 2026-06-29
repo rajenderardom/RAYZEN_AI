@@ -1,0 +1,33 @@
+{
+    "name": "Generic Portal Login",
+    "version": "1.0",
+    "description": "Fills credentials into generic login inputs and clicks submit.",
+    "steps": [
+        {
+            "action": "open_url",
+            "url": "https://example.com/login"
+        },
+        {
+            "action": "wait_for_selector",
+            "selector": "#username"
+        },
+        {
+            "action": "type",
+            "selector": "#username",
+            "text": "admin"
+        },
+        {
+            "action": "type",
+            "selector": "#password",
+            "text": "password123"
+        },
+        {
+            "action": "click",
+            "selector": "#submit-btn"
+        },
+        {
+            "action": "wait",
+            "duration": 3000
+        }
+    ]
+}

@@ -1,0 +1,28 @@
+{
+    "name": "Google Search",
+    "version": "1.0",
+    "description": "Generic browser workflow to open Google, enter a search term, and press Enter.",
+    "steps": [
+        {
+            "action": "open_url",
+            "url": "https://www.google.com"
+        },
+        {
+            "action": "wait_for_selector",
+            "selector": "input[name='q']"
+        },
+        {
+            "action": "type",
+            "selector": "input[name='q']",
+            "text": "RAYZEN AI"
+        },
+        {
+            "action": "press",
+            "key": "Enter"
+        },
+        {
+            "action": "wait",
+            "duration": 2000
+        }
+    ]
+}
