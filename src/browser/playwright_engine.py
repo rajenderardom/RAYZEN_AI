@@ -6,7 +6,10 @@ Version : 0.1.0
 """
 
 from typing import Optional
-from playwright.sync_api import sync_playwright, Playwright, Browser, Page
+
+# Placeholder for lazy import of Playwright sync API.
+sync_playwright = None
+
 from src.core.logger import RayzenLogger
 
 
@@ -16,10 +19,26 @@ class PlaywrightEngine:
     def __init__(self):
         """Initialize the Playwright engine with empty active state."""
         self.logger = RayzenLogger()
-        self._playwright: Optional[Playwright] = None
-        self._browser: Optional[Browser] = None
-        self._page: Optional[Page] = None
+        self._playwright: Optional["Playwright"] = None
+        self._browser: Optional["Browser"] = None
+        self._page: Optional["Page"] = None
 
+    def _ensure_sync_playwright(self):
+        """Return a callable sync_playwright, respecting existing mocks.
+
+        If `sync_playwright` is already a callable (including a unittest.mock), use it.
+        Otherwise, import it lazily from playwright.sync_api.
+        """
+        global sync_playwright
+        if callable(sync_playwright):
+            return sync_playwright
+        try:
+            from playwright.sync_api import sync_playwright as real_sync_playwright
+            sync_playwright = real_sync_playwright
+            return sync_playwright
+        except Exception as e:
+            self.logger.error(f"Failed to import sync_playwright: {e}")
+            raise
     def launch_browser(self, headless: bool = False) -> bool:
         """Launch the Chromium browser instance.
 
@@ -35,7 +54,9 @@ class PlaywrightEngine:
 
         try:
             self.logger.info(f"Launching Chromium browser (headless={headless})...")
-            self._playwright = sync_playwright().start()
+            # Ensure sync_playwright is available, respecting any existing mock
+            sync_playwright_fn = self._ensure_sync_playwright()
+            self._playwright = sync_playwright_fn().start()
             self._browser = self._playwright.chromium.launch(headless=headless)
             context = self._browser.new_context()
             self._page = context.new_page()
