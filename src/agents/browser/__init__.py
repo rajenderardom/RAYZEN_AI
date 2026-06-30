@@ -13,6 +13,9 @@ from src.agents.browser.execution_monitor import ExecutionMonitor
 from src.agents.browser.recovery_engine import RecoveryEngine
 from src.agents.browser.browser_agent import BrowserAgent
 from src.agents.browser.page_intelligence import PageIntelligence, PageAnalysisResult
+from src.agents.browser.goal_models import Goal, GoalConstraint, GoalStep, GoalPlan, GoalResult, GoalAction, to_json
+from src.agents.browser.goal_validator import GoalValidator
+from src.agents.browser.goal_planner import GoalPlanner, create_plan
 
 __all__ = [
     "BrowserTaskRecord",
@@ -25,5 +28,15 @@ __all__ = [
     "BrowserAgent",
     "PageIntelligence",
     "PageAnalysisResult",
+    "Goal",
+    "GoalConstraint",
+    "GoalStep",
+    "GoalPlan",
+    "GoalResult",
+    "GoalAction",
+    "to_json",
+    "GoalValidator",
+    "GoalPlanner",
+    "create_plan",
 ]
 
